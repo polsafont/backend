@@ -10,8 +10,8 @@ from flask import render_template
 from db import db
 
 app = Flask(__name__,
-         static_folder="../../dist/static",
-         template_folder="../../dist")
+         static_folder="../../../vuefrontend/dist/static",
+         template_folder="../../../vuefrontend/dist")
 
 app.config.from_object(__name__)
 
@@ -28,10 +28,10 @@ db.init_app(app)
 #from add_data import init_db
 #init_db()
 
+
 @app.route('/')
 def render_vue():
-    return render_template('index.html')
-
+    return render_template("index.html")
 class Artist(Resource):
     def get(self, id):
         try:
