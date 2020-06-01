@@ -4,11 +4,15 @@ from models.event import EventModel
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 from flask_migrate import Migrate
+from flask_cors import CORS
 
 from db import db
 
 app = Flask(__name__)
+app.config.from_object(__name__)
 api = Api(app)
+
+CORS(app, resources={r'/*': {'origins': '*'}})
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
