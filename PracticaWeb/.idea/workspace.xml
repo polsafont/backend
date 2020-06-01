@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="954fd439-560c-4f04-840a-8fb8dcd5ff83" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="data" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="data" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="data" type="feb32156:DbDataSourceImpl" />
+        <item name="collations" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Flask Main" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1cAxJEFgFxyh6FhD26p4Zqxc6Ap" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RunManager">
+    <configuration name="untitled" type="Python.FlaskServer">
+      <module name="PracticaWeb" />
+      <option name="target" value="$PROJECT_DIR$/app.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="954fd439-560c-4f04-840a-8fb8dcd5ff83" name="Default Changelist" comment="" />
+      <created>1589985124514</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1589985124514</updated>
+      <workItem from="1589985126298" duration="5188000" />
+      <workItem from="1589990611838" duration="5639000" />
+      <workItem from="1590265735221" duration="5356000" />
+      <workItem from="1590429622728" duration="2503000" />
+      <workItem from="1590499402653" duration="4095000" />
+      <workItem from="1590919429107" duration="17120000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="954" y="205" width="800" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589994179705">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="954" y="205" width="800" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1589994179705" />
+    <state width="254" height="195" key="DatabaseViewActions_Filter" timestamp="1590923760811">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="254" height="195" key="DatabaseViewActions_Filter/0.30.1920.1050/1920.0.1920.1080@0.30.1920.1050" timestamp="1590923760811" />
+    <state width="1076" height="275" key="GridCell.Tab.0.bottom" timestamp="1590942229137">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1076" height="275" key="GridCell.Tab.0.bottom/0.30.1920.1050/1920.0.1920.1080@0.30.1920.1050" timestamp="1590942229137" />
+    <state width="1076" height="275" key="GridCell.Tab.0.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1590509421349" />
+    <state width="1076" height="275" key="GridCell.Tab.0.center" timestamp="1590942229137">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1076" height="275" key="GridCell.Tab.0.center/0.30.1920.1050/1920.0.1920.1080@0.30.1920.1050" timestamp="1590942229137" />
+    <state width="1076" height="275" key="GridCell.Tab.0.center/0.30.1920.1050@0.30.1920.1050" timestamp="1590509421349" />
+    <state width="1076" height="275" key="GridCell.Tab.0.left" timestamp="1590942229136">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1076" height="275" key="GridCell.Tab.0.left/0.30.1920.1050/1920.0.1920.1080@0.30.1920.1050" timestamp="1590942229136" />
+    <state width="1076" height="275" key="GridCell.Tab.0.left/0.30.1920.1050@0.30.1920.1050" timestamp="1590509421349" />
+    <state width="1076" height="275" key="GridCell.Tab.0.right" timestamp="1590942229137">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1076" height="275" key="GridCell.Tab.0.right/0.30.1920.1050/1920.0.1920.1080@0.30.1920.1050" timestamp="1590942229137" />
+    <state width="1076" height="275" key="GridCell.Tab.0.right/0.30.1920.1050@0.30.1920.1050" timestamp="1590509421349" />
+    <state width="1076" height="332" key="GridCell.Tab.1.bottom" timestamp="1589990567198">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1076" height="332" key="GridCell.Tab.1.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1589990567198" />
+    <state width="1076" height="332" key="GridCell.Tab.1.center" timestamp="1589990567196">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1076" height="332" key="GridCell.Tab.1.center/0.30.1920.1050@0.30.1920.1050" timestamp="1589990567196" />
+    <state width="1076" height="332" key="GridCell.Tab.1.left" timestamp="1589990567196">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1076" height="332" key="GridCell.Tab.1.left/0.30.1920.1050@0.30.1920.1050" timestamp="1589990567196" />
+    <state width="1076" height="332" key="GridCell.Tab.1.right" timestamp="1589990567197">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1076" height="332" key="GridCell.Tab.1.right/0.30.1920.1050@0.30.1920.1050" timestamp="1589990567197" />
+    <state width="220" height="477" key="HiddenNamespacesPopup" timestamp="1590925459924">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="220" height="477" key="HiddenNamespacesPopup/0.30.1920.1050/1920.0.1920.1080@0.30.1920.1050" timestamp="1590925459924" />
+    <state width="220" height="477" key="HiddenNamespacesPopup/0.30.1920.1050@0.30.1920.1050" timestamp="1590495960339" />
+    <state x="65" y="179" width="992" height="733" key="SettingsEditor" timestamp="1589990851486">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="65" y="179" width="992" height="733" key="SettingsEditor/0.30.1920.1050@0.30.1920.1050" timestamp="1589990851486" />
+    <state x="1052" y="381" key="com.intellij.ide.util.TipDialog" timestamp="1590919429813">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="1052" y="381" key="com.intellij.ide.util.TipDialog/0.30.1920.1050/1920.0.1920.1080@0.30.1920.1050" timestamp="1590919429813" />
+    <state x="1052" y="381" key="com.intellij.ide.util.TipDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1590499878434" />
+    <state x="1084" y="415" width="540" height="279" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1590265937651">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="1084" y="415" width="540" height="279" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1590265937651" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/PracticaWeb$untitled.coverage" NAME="untitled Coverage Results" MODIFIED="1590942229117" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
