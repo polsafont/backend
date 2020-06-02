@@ -25,9 +25,9 @@ class EventModel(db.Model):
         self.total_available_tickets = total_available_tickets
 
     def json(self):
-        data = []
+        data = {'artists': []}
         for a in self.artists:
-            data.append(a.json())
+            data['artists'].append(a.json())
 
         data = {
             'id': self.id,
@@ -72,6 +72,16 @@ class EventModel(db.Model):
     @classmethod
     def get_all(cls):
         return EventModel.query.all()
+
+    @classmethod
+    def find_by_artist(cls, artist):
+        events = EventModel.query.filter(EventModel.artists.any(id=2)).all()
+        data = {'events': []}
+        for a in events:
+            data['events'].append(a.json())
+
+        return data
+
 
 
 

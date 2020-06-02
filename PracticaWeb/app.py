@@ -10,8 +10,8 @@ from flask import render_template
 from db import db
 
 app = Flask(__name__,
-         static_folder="../../../vuefrontend/dist/static",
-         template_folder="../../../vuefrontend/dist")
+         static_folder="../../vuefrontend/dist/static",
+         template_folder="../../vuefrontend/dist")
 
 app.config.from_object(__name__)
 
@@ -28,10 +28,10 @@ db.init_app(app)
 #from add_data import init_db
 #init_db()
 
-
 @app.route('/')
 def render_vue():
-    return render_template("index.html")
+    return render_template('index.html')
+
 class Artist(Resource):
     def get(self, id):
         try:
@@ -130,8 +130,6 @@ class Event(Resource):
             return {"message": "Error Put Event"}, 500
 
 
-
-
 class ArtistList(Resource):
     def get(self):
         data = {'artists': []}
@@ -163,18 +161,55 @@ class EventArtistsList(Resource):
         return data
 
 
-"""
 class EventArtist(Resource):
     def get(self, id_event, id_artist):
         event = EventModel.find_by_id(id_event)
         artists = EventModel.get_artists(event)
-        artist = ArtistModel.find_by_id(id_artist)
-        data = {'artists': []}
         for a in artists:
-            data['artists'].append(a.json())
+            if a.id == int(id_artist):
+                return {'event': event.json(), 'artist': a.json()}, 200
 
-        return data
-"""
+        return {"message": "Error Get EventArtist"}, 500
+
+    def post(self, id_event):
+        parser = reqparse.RequestParser()
+        parser.add_argument('name', type=str, required=True, help="This field cannot be left blanck")
+        parser.add_argument('country', type=str, required=True, help="This field cannot be left blanck")
+        parser.add_argument('genre', type=str, required=True, help="This field cannot be left blanck")
+        data = parser.parse_args()
+
+        try:
+            event = EventModel.find_by_id(id_event)
+            artist = ArtistModel(data['name'], data['country'], data['genre'])
+            ArtistModel.save_to_db(artist)
+
+            event.artists.append(artist)
+            EventModel.save_to_db(event)
+            return {"message": "Artista añadido correctamente al evento"}, 200
+
+        except:
+            return {"message": "Error Post EventArtist"}, 500
+
+    def delete(self, id_event, id_artist):
+        try:
+            event = EventModel.find_by_id(id_event)
+            artists = EventModel.get_artists(event)
+            for a in artists:
+                if a.id == int(id_artist):
+                    event.artists.remove(a)
+            EventModel.save_to_db(event)
+
+            return {"message": "Artista eliminado correctamente del event"}, 200
+        except:
+            return {"message": "Error Delete EventArtist"}, 500
+
+
+class ArtistEventsList(Resource):
+    def get(self, id):
+        artist = ArtistModel.find_by_id(id)
+        events = EventModel.find_by_artist(id)
+
+        return events
 
 
 api.add_resource(Artist, '/artist/<int:id>', '/artist')
@@ -184,9 +219,8 @@ api.add_resource(ArtistList, '/artists')
 api.add_resource(EventList, '/events')
 
 api.add_resource(EventArtistsList, '/event/<int:id>/artists')
-#api.add_resource(EventArtist, '/event/<int:id_event>/artist/<id_artist>', '/event/<int:id_event>/artist')
-
-#api.add_resource(ArtistEventsList, '/artist/<int:id>/events')
+api.add_resource(EventArtist, '/event/<int:id_event>/artist/<id_artist>', '/event/<int:id_event>/artist')
+api.add_resource(ArtistEventsList, '/artist/<int:id>/events')
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
