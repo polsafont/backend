@@ -211,6 +211,27 @@ class ArtistEventsList(Resource):
 
         return events
 
+#TODO orders endpoints
+
+class Orders(Resource):
+    def get(self, id):
+        try:
+            artist = ArtistModel.find_by_id(id)
+            return {'artist': artist.json()}, 200
+        except:
+            return {"message": "Error Get Artist"}, 500
+
+class OrdersList(Resource):
+    def get(self):
+        data = {'events': []}
+        events = EventModel.get_all()
+        for a in events:
+            data['events'].append(a.json())
+
+        return data
+
+api.add_resource(Orders, '/orders/<string:username>')
+api.add_resource(OrdersList, '/orders')
 
 api.add_resource(Artist, '/artist/<int:id>', '/artist')
 api.add_resource(Event, '/event/<int:id>', '/event')

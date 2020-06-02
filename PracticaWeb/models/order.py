@@ -8,11 +8,9 @@ class OrdersModel(db.Model):
     id_event = db.Column(db.Integer, nullable=False)
     tickets_bought = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, username, available_money=200, is_admin=0):
-        self.username = username
-        self.available_money = available_money
-        self.is_admin = is_admin
-        self.password = 'test'
+    def __init__(self, id_event, tickets_bought):
+        self.id_event = id_event
+        self.tickets_bought = tickets_bought
 
     def json(self):
         data = {
