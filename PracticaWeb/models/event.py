@@ -29,7 +29,7 @@ class EventModel(db.Model):
         for a in self.artists:
             data.append(a.json())
 
-        data = {'event': {
+        data = {
             'id': self.id,
             'name': self.name,
             'place': self.place,
@@ -38,7 +38,7 @@ class EventModel(db.Model):
             'artists': data,
             'price': self.price,
             'total_available_tickets': self.total_available_tickets
-        }}
+        }
 
         return data
 
