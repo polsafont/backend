@@ -130,6 +130,8 @@ class Event(Resource):
             return {"message": "Error Put Event"}, 500
 
 
+
+
 class ArtistList(Resource):
     def get(self):
         data = {'artists': []}
