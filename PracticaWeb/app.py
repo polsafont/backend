@@ -12,8 +12,8 @@ from flask import render_template
 from db import db, secret_key
 
 app = Flask(__name__,
-         static_folder="../../vuefrontend/dist/static",
-         template_folder="../../vuefrontend/dist")
+            static_folder="../../vuefrontend/dist/static",
+            template_folder="../../vuefrontend/dist")
 
 app.config.from_object(__name__)
 
@@ -23,7 +23,6 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = secret_key
 
 migrate = Migrate(app, db)
 db.init_app(app)
@@ -215,7 +214,6 @@ class ArtistEventsList(Resource):
         return events
 
 
-#TODO orders endpoints
 class Orders(Resource):
     def get(self, username):
         data = {'orders': []}
@@ -240,8 +238,8 @@ class Orders(Resource):
             available_money = account.available_money
             price_ticket = event.price
 
-            if total_available_tickets > 0:
-                if available_money > price_ticket:
+            if total_available_tickets >= data['tickets_bought']:
+                if available_money >= price_ticket:
                     event.set_tickets_free(total_available_tickets - 1)
                     account.set_available_money(available_money - (price_ticket * data['tickets_bought']))
                 else:

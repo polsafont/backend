@@ -38,5 +38,11 @@ class OrdersModel(db.Model):
         return OrdersModel.query.filter_by(username=username).all()
 
 
+    @classmethod
+    def get_all(cls):
+        return OrdersModel.query.all()
 
+    @classmethod
+    def get_all_by_user(cls, username):
+        return OrdersModel.query.filter_by(username=username).all()
 

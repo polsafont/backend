@@ -92,6 +92,17 @@ class AccountsModel(db.Model):
         }
         return data
 
+    @classmethod
+    def find_by_name(cls, name):
+        return AccountsModel.query.filter_by(username=username).first()
+
+    @classmethod
+    def get_all(cls):
+        return AccountsModel.query.all()
+
+
+
+
 
 
 
