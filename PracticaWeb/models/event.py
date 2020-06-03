@@ -25,9 +25,9 @@ class EventModel(db.Model):
         self.total_available_tickets = total_available_tickets
 
     def json(self):
-        data = {'artists': []}
+        artistsevent = []
         for a in self.artists:
-            data['artists'].append(a.json())
+            artistsevent.append(a.json())
 
         data = {
             'id': self.id,
@@ -35,7 +35,7 @@ class EventModel(db.Model):
             'place': self.place,
             'city': self.city,
             'date': self.date,
-            'artists': data,
+            'artists': artistsevent,
             'price': self.price,
             'total_available_tickets': self.total_available_tickets
         }
