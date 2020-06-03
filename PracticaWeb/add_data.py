@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 from models.artist import ArtistModel
 from models.event import EventModel
+from models.account import AccountsModel
+from models.order import OrdersModel
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'

@@ -58,6 +58,9 @@ class EventModel(db.Model):
         self.price = price
         self.total_available_tickets = total_available_tickets
 
+    def set_tickets_free(self, total_available_tickets):
+        self.total_available_tickets = total_available_tickets
+
     def get_artists(self):
         return self.artists
 
