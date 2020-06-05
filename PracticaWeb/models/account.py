@@ -51,9 +51,6 @@ class AccountsModel(db.Model):
 
         return user
 
-    def verify_password(self, password):
-        return pwd_context.verify(password, self.password)
-
     def hash_password(self, password):
         self.password = pwd_context.encrypt(password)
 
@@ -63,6 +60,10 @@ class AccountsModel(db.Model):
         return s.dumps({'username': self.username})
 
     """
+    def verify_password(self, password):
+        return pwd_context.verify(password, self.password)
+    """
+
     @auth.verify_password
     def verify_password(token, password):
         account = AccountsModel.verify_auth_token(token)
@@ -76,7 +77,6 @@ class AccountsModel(db.Model):
             return 'admin'
         elif user.is_admin == 0:
             return 'user'
-    """
 
     def get_orders(self):
         return self.orders
@@ -88,7 +88,7 @@ class AccountsModel(db.Model):
         data = {
             'username': self.username,
             'is_admin': self.is_admin,
-            'avaible_money': self.available_money
+            'available_money': self.available_money
         }
         return data
 

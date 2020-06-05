@@ -24,12 +24,14 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+app.config['SECRET_KEY'] = secret_key
+
 migrate = Migrate(app, db)
 db.init_app(app)
 
 
-# from add_data import init_db
-# init_db()
+#from add_data import init_db
+#init_db()
 
 @app.route('/')
 def render_vue():
@@ -220,12 +222,15 @@ class ArtistEventsList(Resource):
 
 class Orders(Resource):
     def get(self, username):
-        data = {'orders': []}
-        orders = OrdersModel.find_by_username(username)
-        for o in orders:
-            data['orders'].append(o.json())
+        try:
+            data = {'orders': []}
+            orders = OrdersModel.find_by_username(username)
+            for o in orders:
+                data['orders'].append(o.json())
 
-        return data
+            return data, 200
+        except:
+            return {"message": "User not found"}, 404
 
     # @auth.login_required(role='user')
     def post(self, username):
@@ -269,7 +274,7 @@ class OrdersList(Resource):
         for a in events:
             data['events'].append(a.json())
 
-        return data
+        return data, 200
 
 
 class Accounts(Resource):
@@ -288,9 +293,9 @@ class Accounts(Resource):
             AccountsModel.hash_password(account, data['password'])
 
             AccountsModel.save_to_db(account)
-            return {'menssage': "Cuenta anadida con exito"}, 200
+            return {"message": "Cuenta creada correctamente"}, 201
         except:
-            return {"message": "Error Post EventArtist"}, 500
+            return {"message": "Error creating new user"}, 500
 
     def delete(self, username):
         try:
@@ -314,7 +319,7 @@ class AccountsList(Resource):
         for a in accounts:
             data['accounts'].append(a.json())
 
-        return data
+        return data, 200
 
 
 class Login(Resource):

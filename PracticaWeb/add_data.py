@@ -43,3 +43,13 @@ def init_db():
     new_event3.artists.append(new_artist5)
     db.session.add(new_event3)
     db.session.commit()
+
+    new_user1 = AccountsModel('tester', 0, 200)
+    new_user1.hash_password('1234')  # 'username:'tester', password:'1234'
+    db.session.add(new_user1)
+    db.session.commit()
+
+    new_user1 = AccountsModel('admin', 1, 200)
+    new_user1.hash_password('admin')  # 'username:'admin', password:'admin'
+    db.session.add(new_user1)
+    db.session.commit()
