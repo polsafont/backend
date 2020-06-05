@@ -27,12 +27,14 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 migrate = Migrate(app, db)
 db.init_app(app)
 
-#from add_data import init_db
-#init_db()
+
+# from add_data import init_db
+# init_db()
 
 @app.route('/')
 def render_vue():
     return render_template('index.html')
+
 
 class Artist(Resource):
     def get(self, id):
@@ -99,7 +101,8 @@ class Event(Resource):
         data = parser.parse_args()
 
         try:
-            event = EventModel(data['name'], data['place'], data['city'], data['date'], data['price'], data['total_available_tickets'])
+            event = EventModel(data['name'], data['place'], data['city'], data['date'], data['price'],
+                               data['total_available_tickets'])
             EventModel.save_to_db(event)
             return {"message": "Event anadido correctamente"}, 200
         except:
@@ -125,7 +128,8 @@ class Event(Resource):
 
         try:
             event = EventModel.find_by_id(id)
-            event.set_event(data['name'], data['place'], data['city'], data['date'], data['price'], data['total_available_tickets'])
+            event.set_event(data['name'], data['place'], data['city'], data['date'], data['price'],
+                            data['total_available_tickets'])
             EventModel.save_to_db(event)
             return {"message": "Event modificado correctamente"}, 200
         except:
