@@ -59,24 +59,8 @@ class AccountsModel(db.Model):
 
         return s.dumps({'username': self.username})
 
-
     def verify_password(self, password):
         return pwd_context.verify(password, self.password)
-    """
-
-    @auth.verify_password
-    def verify_password(token, password):
-        account = AccountsModel.verify_auth_token(token)
-        if account:
-            g.user = account
-            return account
-    """
-    @auth.get_user_roles
-    def get_user_roles(user):
-        if user.is_admin == 1:
-            return 'admin'
-        elif user.is_admin == 0:
-            return 'user'
 
     def get_orders(self):
         return self.orders
@@ -102,8 +86,17 @@ class AccountsModel(db.Model):
 
 
 
+@auth.verify_password
+def verify_password(token, password):
+    account = AccountsModel.verify_auth_token(token)
+    if account:
+        g.user = account
+        return account
 
 
-
-
-
+@auth.get_user_roles
+def get_user_roles(user):
+    if user.is_admin == 1:
+        return 'admin'
+    elif user.is_admin == 0:
+        return 'user'

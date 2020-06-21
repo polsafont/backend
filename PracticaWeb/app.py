@@ -1,9 +1,9 @@
 from models.artist import ArtistModel
 from models.event import EventModel
-from models.account import AccountsModel, auth
+from models.account import AccountsModel, auth, verify_password
 from models.order import OrdersModel
 
-from flask import Flask
+from flask import Flask, g
 from flask_restful import Resource, Api, reqparse
 from flask_migrate import Migrate
 from flask_cors import CORS
@@ -30,8 +30,8 @@ migrate = Migrate(app, db)
 db.init_app(app)
 
 
-#from add_data import init_db
-#init_db()
+# from add_data import init_db
+# init_db()
 
 @app.route('/')
 def render_vue():
@@ -46,6 +46,7 @@ class Artist(Resource):
         except:
             return {"message": "Error Get Artist"}, 500
 
+    @auth.login_required(role='admin')
     def post(self, id=None):
         parser = reqparse.RequestParser()
         parser.add_argument('name', type=str, required=True, help="This field cannot be left blanck")
@@ -60,6 +61,7 @@ class Artist(Resource):
         except:
             return {"message": "Error Post Artist"}, 500
 
+    @auth.login_required(role='admin')
     def delete(self, id):
         try:
             artist = ArtistModel.find_by_id(id)
@@ -68,6 +70,7 @@ class Artist(Resource):
         except:
             return {"message": "Error Delete Artist"}, 500
 
+    @auth.login_required(role='admin')
     def put(self, id):
         parser = reqparse.RequestParser()
         parser.add_argument('name', type=str, required=True, help="This field cannot be left blanck")
@@ -92,6 +95,7 @@ class Event(Resource):
         except:
             return {"message": "Error Get Event"}, 500
 
+    @auth.login_required(role='admin')
     def post(self, id=None):
         parser = reqparse.RequestParser()
         parser.add_argument('name', type=str, required=True, help="This field cannot be left blanck")
@@ -110,6 +114,7 @@ class Event(Resource):
         except:
             return {"message": "Error Post Event"}, 500
 
+    @auth.login_required(role='admin')
     def delete(self, id):
         try:
             event = EventModel.find_by_id(id)
@@ -118,6 +123,7 @@ class Event(Resource):
         except:
             return {"message": "Error Delete Event"}, 500
 
+    @auth.login_required(role='admin')
     def put(self, id):
         parser = reqparse.RequestParser()
         parser.add_argument('name', type=str, required=True, help="This field cannot be left blanck")
@@ -179,6 +185,7 @@ class EventArtist(Resource):
 
         return {"message": "Error Get EventArtist"}, 500
 
+    @auth.login_required(role='admin')
     def post(self, id_event):
         parser = reqparse.RequestParser()
         parser.add_argument('name', type=str, required=True, help="This field cannot be left blanck")
@@ -198,6 +205,7 @@ class EventArtist(Resource):
         except:
             return {"message": "Error Post EventArtist"}, 500
 
+    @auth.login_required(role='admin')
     def delete(self, id_event, id_artist):
         try:
             event = EventModel.find_by_id(id_event)
@@ -232,7 +240,7 @@ class Orders(Resource):
         except:
             return {"message": "User not found"}, 404
 
-    # @auth.login_required(role='user')
+    @auth.login_required(role='user')
     def post(self, username):
         parser = reqparse.RequestParser()
         parser.add_argument('event_id', type=int, required=True, help="This field cannot be left blanck")
@@ -246,15 +254,17 @@ class Orders(Resource):
             total_available_tickets = event.total_available_tickets
             available_money = account.available_money
             price_ticket = event.price
-
-            if total_available_tickets >= data['tickets_bought']:
-                if available_money >= price_ticket:
-                    event.set_tickets_free(total_available_tickets - 1)
-                    account.set_available_money(available_money - (price_ticket * data['tickets_bought']))
+            if username == g.user.username:
+                if total_available_tickets >= data['tickets_bought']:
+                    if available_money >= price_ticket:
+                        event.set_tickets_free(total_available_tickets - 1)
+                        account.set_available_money(available_money - (price_ticket * data['tickets_bought']))
+                    else:
+                        return {"message": "Error Post Order(dinero insuficiente)"}, 500
                 else:
-                    return {"message": "Error Post Order(dinero insuficiente)"}, 500
+                    return {"message": "Error Post Order(no hay tickets disponibles)"}, 500
             else:
-                return {"message": "Error Post Order(no hay tickets disponibles)"}, 500
+                return {"message" : "Error token invalid, doesn't match user name"}, 400
 
             order = OrdersModel(data['event_id'], data['tickets_bought'])
             account.orders.append(order)
@@ -262,7 +272,7 @@ class Orders(Resource):
             EventModel.save_to_db(event)
             AccountsModel.save_to_db(account)
             OrdersModel.save_to_db(order)
-            return {"order": order.json()}, 200
+            return {"order": order.json()}, 201
         except:
             return {"message": "Error Post Order"}, 500
 
