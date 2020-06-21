@@ -59,7 +59,7 @@ class AccountsModel(db.Model):
 
         return s.dumps({'username': self.username})
 
-    """
+
     def verify_password(self, password):
         return pwd_context.verify(password, self.password)
     """
@@ -70,7 +70,7 @@ class AccountsModel(db.Model):
         if account:
             g.user = account
             return account
-
+    """
     @auth.get_user_roles
     def get_user_roles(user):
         if user.is_admin == 1:
