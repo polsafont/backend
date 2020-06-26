@@ -264,7 +264,7 @@ class Orders(Resource):
                 else:
                     return {"message": "Error Post Order(no hay tickets disponibles)"}, 500
             else:
-                return {"message" : "Error token invalid, doesn't match user name"}, 400
+                return {"message": "Error token invalid, doesn't match user name"}, 400
 
             order = OrdersModel(data['event_id'], data['tickets_bought'])
             account.orders.append(order)
@@ -278,6 +278,7 @@ class Orders(Resource):
 
 
 class OrdersList(Resource):
+    @auth.login_required(role='admin')
     def get(self):
         data = {'events': []}
         events = EventModel.get_all()
@@ -288,9 +289,10 @@ class OrdersList(Resource):
 
 
 class Accounts(Resource):
+    @auth.login_required(role='user')
     def get(self, username):
         account = AccountsModel.find_by_username(username)
-        return {'acount': account.json()}, 200
+        return {'account': account.json()}, 200
 
     def post(self):
         parser = reqparse.RequestParser()
@@ -299,14 +301,18 @@ class Accounts(Resource):
         data = parser.parse_args()
 
         try:
-            account = AccountsModel(data['username'])
-            AccountsModel.hash_password(account, data['password'])
+            if AccountsModel.find_by_username(data['username']):
+                return {"message": "An user with same username [" + data['username'] + "] already exists"}, 409
+            else:
+                account = AccountsModel(data['username'])
+                AccountsModel.hash_password(account, data['password'])
 
-            AccountsModel.save_to_db(account)
-            return {"message": "Cuenta creada correctamente"}, 201
+                AccountsModel.save_to_db(account)
+                return {"message": "Account created successfully"}, 201
         except:
             return {"message": "Error creating new user"}, 500
 
+    @auth.login_required(role='admin')
     def delete(self, username):
         try:
             account = AccountsModel.find_by_username(username)
@@ -317,12 +323,13 @@ class Accounts(Resource):
 
             AccountsModel.delete_from_db(account)
 
-            return {"message": "Cuenta eliminada correctamente junto a las orders"}, 200
+            return {"message": "Account deleted successfully"}, 200
         except:
-            return {"message": "Error Delete Accounts"}, 500
+            return {"message": "Error deleting account"}, 500
 
 
 class AccountsList(Resource):
+    @auth.login_required(role='admin')
     def get(self):
         data = {'accounts': []}
         accounts = AccountsModel.get_all()
@@ -335,8 +342,8 @@ class AccountsList(Resource):
 class Login(Resource):
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('username', type=str, required=True, help="This field cannot be left blanck")
-        parser.add_argument('password', type=str, required=True, help="This field cannot be left blanck")
+        parser.add_argument('username', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('password', type=str, required=True, help="This field cannot be left blank")
         data = parser.parse_args()
 
         try:
@@ -346,9 +353,9 @@ class Login(Resource):
                     token = AccountsModel.generate_auth_token(account)
                     return {'token': token.decode('ascii')}, 200
                 else:
-                    return {"message": "Contrasena incorrecta"}, 400
+                    return {"message": "Wrong password"}, 400
             else:
-                return {"message": "No se encuentra el usuario"}, 404
+                return {"message": "User not found"}, 404
         except:
             return {"message": "Error Post Login"}, 500
 
