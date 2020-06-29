@@ -49,15 +49,15 @@ class Artist(Resource):
     @auth.login_required(role='admin')
     def post(self, id=None):
         parser = reqparse.RequestParser()
-        parser.add_argument('name', type=str, required=True, help="This field cannot be left blanck")
-        parser.add_argument('country', type=str, required=True, help="This field cannot be left blanck")
-        parser.add_argument('genre', type=str, required=True, help="This field cannot be left blanck")
+        parser.add_argument('name', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('country', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('genre', type=str, required=True, help="This field cannot be left blank")
         data = parser.parse_args()
 
         try:
             artist = ArtistModel(data['name'], data['country'], data['genre'])
             ArtistModel.save_to_db(artist)
-            return {"message": "Artist anadido correctamente"}, 200
+            return {"message": "Artist added successfully"}, 200
         except:
             return {"message": "Error Post Artist"}, 500
 
@@ -66,23 +66,23 @@ class Artist(Resource):
         try:
             artist = ArtistModel.find_by_id(id)
             ArtistModel.delete_from_db(artist)
-            return {"message": "Artist eliminado correctamente"}, 200
+            return {"message": "Artist deleted successfully"}, 200
         except:
             return {"message": "Error Delete Artist"}, 500
 
     @auth.login_required(role='admin')
     def put(self, id):
         parser = reqparse.RequestParser()
-        parser.add_argument('name', type=str, required=True, help="This field cannot be left blanck")
-        parser.add_argument('country', type=str, required=True, help="This field cannot be left blanck")
-        parser.add_argument('genre', type=str, required=True, help="This field cannot be left blanck")
+        parser.add_argument('name', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('country', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('genre', type=str, required=True, help="This field cannot be left blank")
         data = parser.parse_args()
 
         try:
             artist = ArtistModel.find_by_id(id)
             artist.set_artist(data['name'], data['country'], data['genre'])
             ArtistModel.save_to_db(artist)
-            return {"message": "Artist modificado correctamente"}, 200
+            return {"message": "Artist modified successfully"}, 200
         except:
             return {"message": "Error Put Artist"}, 500
 
@@ -98,19 +98,19 @@ class Event(Resource):
     @auth.login_required(role='admin')
     def post(self, id=None):
         parser = reqparse.RequestParser()
-        parser.add_argument('name', type=str, required=True, help="This field cannot be left blanck")
-        parser.add_argument('place', type=str, required=True, help="This field cannot be left blanck")
-        parser.add_argument('city', type=str, required=True, help="This field cannot be left blanck")
-        parser.add_argument('date', type=str, required=True, help="This field cannot be left blanck")
-        parser.add_argument('price', type=int, required=True, help="This field cannot be left blanck")
-        parser.add_argument('total_available_tickets', type=int, required=True, help="This field cannot be left blanck")
+        parser.add_argument('name', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('place', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('city', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('date', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('price', type=int, required=True, help="This field cannot be left blank")
+        parser.add_argument('total_available_tickets', type=int, required=True, help="This field cannot be left blank")
         data = parser.parse_args()
 
         try:
             event = EventModel(data['name'], data['place'], data['city'], data['date'], data['price'],
                                data['total_available_tickets'])
             EventModel.save_to_db(event)
-            return {"message": "Event anadido correctamente"}, 200
+            return {"message": "Event added successfully"}, 200
         except:
             return {"message": "Error Post Event"}, 500
 
@@ -119,19 +119,19 @@ class Event(Resource):
         try:
             event = EventModel.find_by_id(id)
             EventModel.delete_from_db(event)
-            return {"message": "Event eliminado correctamente"}, 200
+            return {"message": "Event deleted successfully"}, 200
         except:
             return {"message": "Error Delete Event"}, 500
 
     @auth.login_required(role='admin')
     def put(self, id):
         parser = reqparse.RequestParser()
-        parser.add_argument('name', type=str, required=True, help="This field cannot be left blanck")
-        parser.add_argument('place', type=str, required=True, help="This field cannot be left blanck")
-        parser.add_argument('city', type=str, required=True, help="This field cannot be left blanck")
-        parser.add_argument('date', type=str, required=True, help="This field cannot be left blanck")
-        parser.add_argument('price', type=int, required=True, help="This field cannot be left blanck")
-        parser.add_argument('total_available_tickets', type=int, required=True, help="This field cannot be left blanck")
+        parser.add_argument('name', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('place', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('city', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('date', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('price', type=int, required=True, help="This field cannot be left blank")
+        parser.add_argument('total_available_tickets', type=int, required=True, help="This field cannot be left blank")
         data = parser.parse_args()
 
         try:
@@ -139,7 +139,7 @@ class Event(Resource):
             event.set_event(data['name'], data['place'], data['city'], data['date'], data['price'],
                             data['total_available_tickets'])
             EventModel.save_to_db(event)
-            return {"message": "Event modificado correctamente"}, 200
+            return {"message": "Event modified successfully"}, 200
         except:
             return {"message": "Error Put Event"}, 500
 
@@ -188,9 +188,9 @@ class EventArtist(Resource):
     @auth.login_required(role='admin')
     def post(self, id_event):
         parser = reqparse.RequestParser()
-        parser.add_argument('name', type=str, required=True, help="This field cannot be left blanck")
-        parser.add_argument('country', type=str, required=True, help="This field cannot be left blanck")
-        parser.add_argument('genre', type=str, required=True, help="This field cannot be left blanck")
+        parser.add_argument('name', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('country', type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument('genre', type=str, required=True, help="This field cannot be left blank")
         data = parser.parse_args()
 
         try:
@@ -200,7 +200,7 @@ class EventArtist(Resource):
 
             event.artists.append(artist)
             EventModel.save_to_db(event)
-            return {"message": "Artista anadido correctamente al evento"}, 200
+            return {"message": "Artist added successfully to event"}, 200
 
         except:
             return {"message": "Error Post EventArtist"}, 500
@@ -215,7 +215,7 @@ class EventArtist(Resource):
                     event.artists.remove(a)
             EventModel.save_to_db(event)
 
-            return {"message": "Artista eliminado correctamente del event"}, 200
+            return {"message": "Artist deleted successfully from event"}, 200
         except:
             return {"message": "Error Delete EventArtist"}, 500
 
@@ -243,8 +243,8 @@ class Orders(Resource):
     @auth.login_required(role='user')
     def post(self, username):
         parser = reqparse.RequestParser()
-        parser.add_argument('event_id', type=int, required=True, help="This field cannot be left blanck")
-        parser.add_argument('tickets_bought', type=int, required=True, help="This field cannot be left blanck")
+        parser.add_argument('event_id', type=int, required=True, help="This field cannot be left blank")
+        parser.add_argument('tickets_bought', type=int, required=True, help="This field cannot be left blank")
         data = parser.parse_args()
 
         try:
@@ -260,9 +260,9 @@ class Orders(Resource):
                         event.set_tickets_free(total_available_tickets - 1)
                         account.set_available_money(available_money - (price_ticket * data['tickets_bought']))
                     else:
-                        return {"message": "Error Post Order(dinero insuficiente)"}, 500
+                        return {"message": "Error Post Order(insufficient money)"}, 500
                 else:
-                    return {"message": "Error Post Order(no hay tickets disponibles)"}, 500
+                    return {"message": "Error Post Order(no tickets available)"}, 500
             else:
                 return {"message": "Error token invalid, doesn't match user name"}, 400
 
