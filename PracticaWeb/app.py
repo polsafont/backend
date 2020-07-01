@@ -47,7 +47,7 @@ class Artist(Resource):
             return {"message": "Error Get Artist"}, 500
 
     @auth.login_required(role='admin')
-    def post(self, id=None):
+    def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('name', type=str, required=True, help="This field cannot be left blank")
         parser.add_argument('country', type=str, required=True, help="This field cannot be left blank")
@@ -195,9 +195,14 @@ class EventArtist(Resource):
 
         try:
             event = EventModel.find_by_id(id_event)
+            if ArtistModel.find_by_name(data['name']):
+                artist = ArtistModel.find_by_name(data['name'])
+                event.artists.append(artist)
+                EventModel.save_to_db(event)
+                return {"message": "Artist added successfully to event"}, 200
+
             artist = ArtistModel(data['name'], data['country'], data['genre'])
             ArtistModel.save_to_db(artist)
-
             event.artists.append(artist)
             EventModel.save_to_db(event)
             return {"message": "Artist added successfully to event"}, 200
@@ -208,14 +213,16 @@ class EventArtist(Resource):
     @auth.login_required(role='admin')
     def delete(self, id_event, id_artist):
         try:
+            if(!EventModel.find_by_id(id_event)):
+                return {"message": "Event with ['id' : " + id_event +"] not found "}, 404
             event = EventModel.find_by_id(id_event)
             artists = EventModel.get_artists(event)
             for a in artists:
                 if a.id == int(id_artist):
                     event.artists.remove(a)
-            EventModel.save_to_db(event)
-
-            return {"message": "Artist deleted successfully from event"}, 200
+                    EventModel.save_to_db(event)
+                    return {"message": "Artist deleted successfully from event"}, 200
+            return {"message": "Artist with ['id' : " + id_artist + "] in Event with [ 'id' : " + id_event +"] not found "}, 404
         except:
             return {"message": "Error Delete EventArtist"}, 500
 
@@ -379,4 +386,4 @@ api.add_resource(AccountsList, '/accounts')
 api.add_resource(Login, '/login')
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(port=5000, debug=True, threaded=False)
