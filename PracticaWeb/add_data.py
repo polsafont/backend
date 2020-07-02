@@ -16,7 +16,7 @@ db.init_app(app)
 def init_db():
     db.drop_all()
     db.create_all()
-    new_artist1 = ArtistModel("Bad Gyal", "Spain", "TRAP")
+    new_artist1 = ArtistModel(name="Bad Gyal", country="Spain", genre="TRAP")
     db.session.add(new_artist1)
     new_artist2 = ArtistModel(name="Txarango", country="Spain", genre="REGGAE")
     db.session.add(new_artist2)
@@ -44,12 +44,12 @@ def init_db():
     db.session.add(new_event3)
     db.session.commit()
 
-    new_user1 = AccountsModel('tester', 0, 200)
+    new_user1 = AccountsModel('tester', 0, 500)
     new_user1.hash_password('1234')  # 'username:'tester', password:'1234'
     db.session.add(new_user1)
     db.session.commit()
 
-    new_user1 = AccountsModel('admin', 1, 200)
+    new_user1 = AccountsModel('admin', 1, 400)
     new_user1.hash_password('admin')  # 'username:'admin', password:'admin'
     db.session.add(new_user1)
     db.session.commit()

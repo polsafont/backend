@@ -117,9 +117,11 @@ class Event(Resource):
     @auth.login_required(role='admin')
     def delete(self, id):
         try:
-            event = EventModel.find_by_id(id)
-            EventModel.delete_from_db(event)
-            return {"message": "Event deleted successfully"}, 200
+            if EventModel.find_by_id(id):
+                event = EventModel.find_by_id(id)
+                EventModel.delete_from_db(event)
+                return {"message": "Event with ['id' : " + id + "] deleted successfully"}, 200
+            return {"message": "Event with ['id' : " + id + "] not found "}, 404
         except:
             return {"message": "Error Delete Event"}, 500
 
@@ -194,18 +196,19 @@ class EventArtist(Resource):
         data = parser.parse_args()
 
         try:
-            event = EventModel.find_by_id(id_event)
-            if ArtistModel.find_by_name(data['name']):
-                artist = ArtistModel.find_by_name(data['name'])
+            if EventModel.find_by_id(id_event):
+                event = EventModel.find_by_id(id_event)
+                if ArtistModel.find_by_name(data['name']):
+                    artist = ArtistModel.find_by_name(data['name'])
+                    event.artists.append(artist)
+                    EventModel.save_to_db(event)
+                    return {"message": "Artist added successfully to event with ['id' : " + id_event + "]"}, 200
+                artist = ArtistModel(data['name'], data['country'], data['genre'])
+                ArtistModel.save_to_db(artist)
                 event.artists.append(artist)
                 EventModel.save_to_db(event)
-                return {"message": "Artist added successfully to event"}, 200
-
-            artist = ArtistModel(data['name'], data['country'], data['genre'])
-            ArtistModel.save_to_db(artist)
-            event.artists.append(artist)
-            EventModel.save_to_db(event)
-            return {"message": "Artist added successfully to event"}, 200
+                return {"message": "Artist created and added successfully to event with ['id' : " + id_event + "]"}, 201
+            return {"message": "Event with ['id' : " + id_event + "] not found "}, 404
 
         except:
             return {"message": "Error Post EventArtist"}, 500
@@ -213,16 +216,16 @@ class EventArtist(Resource):
     @auth.login_required(role='admin')
     def delete(self, id_event, id_artist):
         try:
-            if(!EventModel.find_by_id(id_event)):
-                return {"message": "Event with ['id' : " + id_event +"] not found "}, 404
-            event = EventModel.find_by_id(id_event)
-            artists = EventModel.get_artists(event)
-            for a in artists:
-                if a.id == int(id_artist):
-                    event.artists.remove(a)
-                    EventModel.save_to_db(event)
-                    return {"message": "Artist deleted successfully from event"}, 200
-            return {"message": "Artist with ['id' : " + id_artist + "] in Event with [ 'id' : " + id_event +"] not found "}, 404
+            if EventModel.find_by_id(id_event):
+                event = EventModel.find_by_id(id_event)
+                artists = EventModel.get_artists(event)
+                for a in artists:
+                    if a.id == int(id_artist):
+                        event.artists.remove(a)
+                        EventModel.save_to_db(event)
+                        return {"message": "Artist deleted successfully from event"}, 200
+                return {"message": "Artist with ['id' : " + id_artist + "] in Event with [ 'id' : " + id_event +"] not found "}, 404
+            return {"message": "Event with ['id' : " + id_event + "] not found "}, 404
         except:
             return {"message": "Error Delete EventArtist"}, 500
 

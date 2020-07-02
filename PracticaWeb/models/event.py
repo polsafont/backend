@@ -85,6 +85,14 @@ class EventModel(db.Model):
 
         return data
 
+    @classmethod
+    def find_artist(cls, artist):
+        events = EventModel.query.filter(EventModel.artists.any(id=2)).all()
+        data = {'events': []}
+        for a in events:
+            data['events'].append(a.json())
+
+        return data
 
 
 
