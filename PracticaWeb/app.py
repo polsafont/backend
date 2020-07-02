@@ -120,10 +120,11 @@ class Event(Resource):
             if EventModel.find_by_id(id):
                 event = EventModel.find_by_id(id)
                 EventModel.delete_from_db(event)
-                return {"message": "Event with ['id' : " + id + "] deleted successfully"}, 200
-            return {"message": "Event with ['id' : " + id + "] not found "}, 404
+                return {"message": "Event deleted"}, 200
+            return {"message": "Event not found "}, 404
         except:
             return {"message": "Error Delete Event"}, 500
+
 
     @auth.login_required(role='admin')
     def put(self, id):
@@ -202,14 +203,13 @@ class EventArtist(Resource):
                     artist = ArtistModel.find_by_name(data['name'])
                     event.artists.append(artist)
                     EventModel.save_to_db(event)
-                    return {"message": "Artist added successfully to event with ['id' : " + id_event + "]"}, 200
+                    return {"message": "Artist added successfully to event"}, 200
                 artist = ArtistModel(data['name'], data['country'], data['genre'])
                 ArtistModel.save_to_db(artist)
                 event.artists.append(artist)
                 EventModel.save_to_db(event)
-                return {"message": "Artist created and added successfully to event with ['id' : " + id_event + "]"}, 201
-            return {"message": "Event with ['id' : " + id_event + "] not found "}, 404
-
+                return {"message": "Artist created and added successfully to event"}, 201
+            return {"message": "Event not found "}, 404
         except:
             return {"message": "Error Post EventArtist"}, 500
 
@@ -224,8 +224,8 @@ class EventArtist(Resource):
                         event.artists.remove(a)
                         EventModel.save_to_db(event)
                         return {"message": "Artist deleted successfully from event"}, 200
-                return {"message": "Artist with ['id' : " + id_artist + "] in Event with [ 'id' : " + id_event +"] not found "}, 404
-            return {"message": "Event with ['id' : " + id_event + "] not found "}, 404
+                return {"message": "Artist not found in event"}, 404
+            return {"message": "Event not found "}, 404
         except:
             return {"message": "Error Delete EventArtist"}, 500
 
@@ -239,6 +239,7 @@ class ArtistEventsList(Resource):
 
 
 class Orders(Resource):
+    @auth.login_required()
     def get(self, username):
         try:
             data = {'orders': []}
@@ -250,7 +251,7 @@ class Orders(Resource):
         except:
             return {"message": "User not found"}, 404
 
-    @auth.login_required(role='user')
+    @auth.login_required()
     def post(self, username):
         parser = reqparse.RequestParser()
         parser.add_argument('event_id', type=int, required=True, help="This field cannot be left blank")
@@ -299,10 +300,17 @@ class OrdersList(Resource):
 
 
 class Accounts(Resource):
-    @auth.login_required(role='user')
+    @auth.login_required()
     def get(self, username):
-        account = AccountsModel.find_by_username(username)
-        return {'account': account.json()}, 200
+        try:
+            if username == g.user.username:
+                if AccountsModel.find_by_username(username):
+                    account = AccountsModel.find_by_username(username)
+                    return {'account': account.json()}, 200
+                return {"message": "Account not found"}, 404
+            return {"message": "User unauthorized"}, 403
+        except:
+            return {"message": "Error getting user"}, 500
 
     def post(self):
         parser = reqparse.RequestParser()

@@ -44,12 +44,12 @@ def init_db():
     db.session.add(new_event3)
     db.session.commit()
 
-    new_user1 = AccountsModel('tester', 0, 500)
+    new_user1 = AccountsModel('tester', 500, 0)
     new_user1.hash_password('1234')  # 'username:'tester', password:'1234'
     db.session.add(new_user1)
     db.session.commit()
 
-    new_user1 = AccountsModel('admin', 1, 400)
+    new_user1 = AccountsModel('admin', 400, 1)
     new_user1.hash_password('admin')  # 'username:'admin', password:'admin'
     db.session.add(new_user1)
     db.session.commit()
